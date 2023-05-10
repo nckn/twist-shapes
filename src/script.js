@@ -25,12 +25,9 @@ const cubeTextureLoader = new THREE.CubeTextureLoader()
 /**
  * Update all materials
  */
-const updateAllMaterials = () =>
-{
-    scene.traverse((child) =>
-    {
-        if(child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial)
-        {
+const updateAllMaterials = () => {
+    scene.traverse((child) => {
+        if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial) {
             child.material.envMapIntensity = 1
             child.material.needsUpdate = true
             child.castShadow = true
@@ -66,7 +63,7 @@ mapTexture.encoding = THREE.sRGBEncoding
 const normalTexture = textureLoader.load('/models/LeePerrySmith/normal.jpg')
 
 // Material
-const material = new THREE.MeshStandardMaterial( {
+const material = new THREE.MeshStandardMaterial({
     map: mapTexture,
     normalMap: normalTexture
 })
@@ -79,8 +76,7 @@ const customUniforms = {
     uTime: { value: 0 }
 }
 
-material.onBeforeCompile = (shader) =>
-{
+material.onBeforeCompile = (shader) => {
     shader.uniforms.uTime = customUniforms.uTime
 
     shader.vertexShader = shader.vertexShader.replace(
@@ -118,8 +114,7 @@ material.onBeforeCompile = (shader) =>
     )
 }
 
-depthMaterial.onBeforeCompile = (shader) =>
-{
+depthMaterial.onBeforeCompile = (shader) => {
     shader.uniforms.uTime = customUniforms.uTime
     shader.vertexShader = shader.vertexShader.replace(
         '#include <common>',
@@ -152,8 +147,7 @@ depthMaterial.onBeforeCompile = (shader) =>
  */
 gltfLoader.load(
     '/models/LeePerrySmith/LeePerrySmith.glb',
-    (gltf) =>
-    {
+    (gltf) => {
         // Model
         const mesh = gltf.scene.children[0]
         mesh.rotation.y = Math.PI * 0.5
@@ -197,8 +191,7 @@ const sizes = {
     height: window.innerHeight
 }
 
-window.addEventListener('resize', () =>
-{
+window.addEventListener('resize', () => {
     // Update sizes
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
@@ -245,8 +238,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  */
 const clock = new THREE.Clock()
 
-const tick = () =>
-{
+const tick = () => {
     const elapsedTime = clock.getElapsedTime()
 
     // Update material
